@@ -1,0 +1,26 @@
+# 이상 동작 감지 Agent 판정 기준값 (prompts.md 기본값)
+camera_id: "CAM-01"          # .env의 CAMERA_ID가 있으면 그 값을 우선 사용
+target_fps: 10
+resize_width: 640
+pose_model: "yolov8n-pose.pt"
+helmet_model: "helmet.pt"
+person_conf: 0.5
+keypoint_conf: 0.5
+no_helmet_conf: 0.5
+helmet_detect_conf: 0.25     # helmet.pt 박스 검출 최소 신뢰도 (No Helmet 판정은 no_helmet_conf 기준)
+pose_imgsz: 416              # pose 추론 입력 크기 (작을수록 빠름, 먼 CCTV는 640 권장)
+helmet_imgsz: 416            # helmet 추론 입력 크기 (웹캠 근거리는 416이 정확, 먼 CCTV는 640 권장)
+helmet_every_n: 2            # helmet 추론 주기(프레임), 사이 프레임은 직전 결과 재사용
+reset_grace_seconds: 1.0     # 검출이 잠깐 끊겨도 이 시간 안에 다시 감지되면 지속시간 유지
+no_helmet_seconds: 2         # 주의 판정 지속시간 (안전모 미착용)
+danger_seconds: 5            # 위험 판정 지속시간 (넘어짐·구조요청 이상 동작)
+fall_torso_angle: 60         # 몸통 기울기(도)
+fall_box_ratio: 1.2          # person 박스 가로/세로
+blink_interval: 0.5          # 점멸 주기(초)
+reconnect_interval: 5
+reconnect_max: 3
+log_max_lines: 100
+alert_panel_max: 5
+bell_sound: "alarm.m4a"        # 주의 벨 (wav 외 형식은 자동 변환)
+siren_sound: "alarm.m4a"       # 위험 경보음 (주의와 같은 파일, 해제 전까지 반복)
+log_file: "alert_log.csv"
